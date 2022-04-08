@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../Hotel/CSS/stylesheet.css">
+    <link rel="stylesheet" href="../Admya1.github.io/CSS/stylesheet.css">
     <script src="https://kit.fontawesome.com/9471381b47.js" crossorigin="anonymous"></script>
     <title>Form</title>
 </head>
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <div class="preloader"></div>
     <nav class="nav">
-        <div class="logo"><img src="../Hotel/Images/logo.png"></div>
+        <div class="logo"><img src="../Admya1.github.io/Images/logo.png"></div>
         <ul class="options">
             <li>
                 <a href="index.html">HOME</a>
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </ul>
         </footer>
     </div>
-    <script src="../Hotel/JS/script2.js"></script>
+    <script src="../Admya1.github.io/JS/script2.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();

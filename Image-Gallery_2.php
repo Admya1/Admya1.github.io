@@ -14,7 +14,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../Hotel/CSS/stylesheet.css">
+    <link rel="stylesheet" href="../Admya1.github.io/CSS/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Image-Gallery</title>
 </head>
@@ -22,7 +22,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <body>
 <nav class="nav">
 <div class="preloader"></div>
-        <div class="logo"><img src="../Hotel/Images/logo.png"></div>
+        <div class="logo"><img src="../Admya1.github.io/Images/logo.png"></div>
         <ul class="options">
             <li>
                 <a href="welcome.php">HOME</a>
@@ -78,22 +78,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
     </div>
     <div class="img-gallery">
-        <img src="../Hotel/Images/I1.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I2.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I3.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I4.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I5.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I6.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I7.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I8.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I9.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I10.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I11.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I12.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I13.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I14.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I15.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I16.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I1.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I2.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I3.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I4.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I5.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I6.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I7.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I8.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I9.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I10.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I11.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I12.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I13.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I14.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I15.jpg" onclick="openFullImg(this.src)">
+        <img src="../Admya1.github.io/Images/I16.jpg" onclick="openFullImg(this.src)">
     </div>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
@@ -130,7 +130,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </footer>
     </div>
 
-    <script src="../Hotel/JS/script2.js"></script>
+    <script src="../Admya1.github.io/JS/script2.js"></script>
     <script>
         var fullImgBox = document.getElementById("fullImgBox");
         var fullImg = document.getElementById("fullImg");
