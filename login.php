@@ -1,3 +1,53 @@
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+    header('location: welcome.php');
+    exit();
+}
+require_once 'config.php';
+
+$username = $password = '';
+$err = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty(trim($_POST['username'])) || empty(trim($_POST['password']))) {
+        $err = 'Please enter username + password';
+    } else {
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
+    }
+
+    if (empty($err)) {
+        $sql = 'SELECT id, username, password FROM users WHERE username = ?';
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 's', $param_username);
+        $param_username = $username;
+
+        // Try to execute this statement
+        if (mysqli_stmt_execute($stmt)) {
+            mysqli_stmt_store_result($stmt);
+            if (mysqli_stmt_num_rows($stmt) == 1) {
+                mysqli_stmt_bind_result(
+                    $stmt,
+                    $id,
+                    $username,
+                    $hashed_password
+                );
+                if (mysqli_stmt_fetch($stmt)) {
+                    if (password_verify($password, $hashed_password)) {
+                        session_start();
+                        $_SESSION['username'] = $username;
+                        $_SESSION['id'] = $id;
+                        $_SESSION['loggedin'] = true;
+
+                        header('location: welcome.php');
+                    }
+                }
+            }
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,15 +56,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link rel="stylesheet" href="../CSS/stylesheet.css">
+    <link rel="stylesheet" href="../Hotel/CSS/stylesheet.css">
     <script src="https://kit.fontawesome.com/9471381b47.js" crossorigin="anonymous"></script>
     <title>Form</title>
 </head>
 
 <body>
+<div class="preloader"></div>
     <nav class="nav">
-        <div class="logo"></div>
+        <div class="logo"><img src="../Hotel/Images/logo.png"></div>
         <ul class="options">
             <li>
                 <a href="index.html">HOME</a>
@@ -29,9 +79,9 @@
                 <a href="Gallery.html">GALLERY</a>
             </li>
         </ul>
-        <form action="form.html" method="get">
+        <form action="register.php" method="get">
             <button class="navbtn" type="submit">
-                RESERVATION
+                REGISTER
             </button>
         </form>
         <div class="burger">
@@ -56,57 +106,21 @@
                 <a href="Gallery.html">GALLERY</a>
             </li>
         </ul>
-        <form action="form.html" method="get">
+        <form action="register.php" method="get">
             <button class="ver_navbtn" type="submit">
-                RESERVATION
+                REGISTER
             </button>
         </form>
     </div>
-    <div class="form_body">
-        <div class="container_form" id="container_form">
-            <div class="form-container sign-up-container">
-                <form action="#">
-                    <h1>Create Account</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign Up</button>
-                </form>
-            </div>
-            <div class="form-container sign-in-container">
-                <form action="#">
-                    <h1>Sign in</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your account</span>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign In</button>
-                </form>
-            </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>To keep connected with us please login with your personal info</p>
-                        <button class="ghost" id="signIn">Sign In</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Hello, Friend!</h1>
-                        <p>Enter your personal details and start journey with us</p>
-                        <button class="ghost" id="signUp">Sign Up</button>
-                    </div>
-                </div>
-            </div>
+    <div class="signup_box">
+        <div class="signup_form">
+            <h1>LOG IN</h1>
+            <form action="" method="post">
+                <input type="text" placeholder="Username"name="username" id="username">
+                <input type="password" placeholder="Password"name="password" id="password">
+                <p><button class="form_btn">LOG IN</button></p>
+                <span>Don't have an account? <a href="register.php">Sign up</a></span>
+            </form>
         </div>
     </div>
     <div class="container">
@@ -143,9 +157,9 @@
             </ul>
         </footer>
     </div>
-    <script src="../JS/script2.js"></script>
+    <script src="../Hotel/JS/script2.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../JS/script.js" defer></script>
+    <script src="../Hotel/JS/script.js" defer></script>
     <script>
         AOS.init();
     </script>

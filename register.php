@@ -1,3 +1,85 @@
+<?php
+require_once 'config.php';
+
+$username = $password = $confirm_password = '';
+$username_err = $password_err = $confirm_password_err = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if username is empty
+    if (empty(trim($_POST['username']))) {
+        $username_err = 'Username cannot be blank';
+    } else {
+        $sql = 'SELECT id FROM users WHERE username = ?';
+        $stmt = mysqli_prepare($conn, $sql);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, 's', $param_username);
+
+            // Set the value of param username
+            $param_username = trim($_POST['username']);
+
+            // Try to execute this statement
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_store_result($stmt);
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+                    $username_err = 'This username is already taken';
+                } else {
+                    $username = trim($_POST['username']);
+                }
+            } else {
+                echo 'Something went wrong';
+            }
+        }
+    }
+
+    mysqli_stmt_close($stmt);
+
+    // Check for password
+    if (empty(trim($_POST['password']))) {
+        $password_err = 'Password cannot be blank';
+    } elseif (strlen(trim($_POST['password'])) < 5) {
+        $password_err = 'Password cannot be less than 5 characters';
+    } else {
+        $password = trim($_POST['password']);
+    }
+
+    // Check for confirm password field
+    if (trim($_POST['password']) != trim($_POST['confirm_password'])) {
+        $password_err = 'Passwords should match';
+    }
+
+    // If there were no errors, go ahead and insert into the database
+    if (
+        empty($username_err) &&
+        empty($password_err) &&
+        empty($confirm_password_err)
+    ) {
+        $sql = 'INSERT INTO users (username, password) VALUES (?, ?)';
+        $stmt = mysqli_prepare($conn, $sql);
+        if ($stmt) {
+            mysqli_stmt_bind_param(
+                $stmt,
+                'ss',
+                $param_username,
+                $param_password
+            );
+
+            // Set these parameters
+            $param_username = $username;
+            $param_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Try to execute the query
+            if (mysqli_stmt_execute($stmt)) {
+                header('location: login.php');
+            } else {
+                echo 'Something went wrong... cannot redirect!';
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+    mysqli_close($conn);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,12 +89,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../Hotel/CSS/stylesheet.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Image-Gallery</title>
+    <script src="https://kit.fontawesome.com/9471381b47.js" crossorigin="anonymous"></script>
+    <title>Form</title>
 </head>
 
 <body>
-    <div class="preloader"></div>
+<div class="preloader"></div>
     <nav class="nav">
         <div class="logo"><img src="../Hotel/Images/logo.png"></div>
         <ul class="options">
@@ -62,31 +144,18 @@
             </button>
         </form>
     </div>
-    <div class="gallerybg">
-        <h1>IMAGE-GALLERY</h1>
-    </div>
-    <div class="full-img" id="fullImgBox">
-        <img src="../Images/I1.jpg" id="fullImg">
-        <span onclick="closeFullImg()">X</span>
-
-    </div>
-    <div class="img-gallery">
-        <img src="../Hotel/Images/I1.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I2.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I3.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I4.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I5.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I6.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I7.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I8.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I9.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I10.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I11.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I12.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I13.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I14.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I15.jpg" onclick="openFullImg(this.src)">
-        <img src="../Hotel/Images/I16.jpg" onclick="openFullImg(this.src)">
+    <div class="signup_box">
+        <div class="signup_form">
+            <h1>REGISTER HERE</h1>
+            <form action="" method="post">
+                <input type="text" placeholder="Username" name="username" id="username">
+                <input type="password" placeholder="Password" name="password" id="password">
+                <input type="password" placeholder="Confirm Password" name ="confirm_password"  id="confirm_password">
+                
+                <p><button class="form_btn">SIGN UP</button></p>
+                <span>Have an account? <a href="login.php">Log in</a></span>
+            </form>
+        </div>
     </div>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
@@ -122,22 +191,17 @@
             </ul>
         </footer>
     </div>
-
     <script src="../Hotel/JS/script2.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        var fullImgBox = document.getElementById("fullImgBox");
-        var fullImg = document.getElementById("fullImg");
-
-        function openFullImg(pic) {
-            fullImgBox.style.display = "flex";
-            fullImg.src = pic;
-        }
-
-        function closeFullImg() {
-            fullImgBox.style.display = "none";
-        }
+        AOS.init();
     </script>
 
 </body>
 
 </html>
+
+
+
+
+

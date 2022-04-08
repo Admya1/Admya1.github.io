@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,26 +20,26 @@
 </head>
 
 <body>
-    <div class="preloader"></div>
-    <nav class="nav">
+<nav class="nav">
+<div class="preloader"></div>
         <div class="logo"><img src="../Hotel/Images/logo.png"></div>
         <ul class="options">
             <li>
-                <a href="index.html">HOME</a>
+                <a href="welcome.php">HOME</a>
             </li>
             <li>
-                <a href="AboutUs.html">ABOUT US</a>
+                <a href="AboutUs_2.php">ABOUT US</a>
             </li>
             <li>
-                <a href="ContactUs.html">CONTACT US</a>
+                <a href="ContactUs_2.php">CONTACT US</a>
             </li>
             <li>
-                <a href="Gallery.html">GALLERY</a>
+                <a href="Gallery_2.php">GALLERY</a>
             </li>
         </ul>
-        <form action="register.php" method="get">
+        <form action="logout.php" method="get">
             <button class="navbtn" type="submit">
-                REGISTER
+                LOGOUT
             </button>
         </form>
         <div class="burger">
@@ -39,26 +47,25 @@
             <div class="line"></div>
             <div class="line"></div>
         </div>
-
     </nav>
     <div class="null njs">
         <ul class="vertical_options">
             <li>
-                <a href="index.html">HOME</a>
+                <a href="welcome.php">HOME</a>
             </li>
             <li>
-                <a href="AboutUs.html">ABOUT US</a>
+                <a href="AboutUs_2.php">ABOUT US</a>
             </li>
             <li>
-                <a href="ContactUs.html">CONTACT US</a>
+                <a href="ContactUs_2.php">CONTACT US</a>
             </li>
             <li>
-                <a href="Gallery.html">GALLERY</a>
+                <a href="Gallery_2.php">GALLERY</a>
             </li>
         </ul>
-        <form action="register.php" method="get">
+        <form action="logout.php" method="get">
             <button class="ver_navbtn" type="submit">
-                REGISTER
+                LOGOUT
             </button>
         </form>
     </div>
